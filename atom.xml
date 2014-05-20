@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[My Octopress Blog]]></title>
+  <link href="http://yupliang.github.io/atom.xml" rel="self"/>
+  <link href="http://yupliang.github.io/"/>
+  <updated>2014-05-20T16:38:07+08:00</updated>
+  <id>http://yupliang.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[About This Blog]]></title>
+    <link href="http://yupliang.github.io/blog/2014/05/20/about-this-blog/"/>
+    <updated>2014-05-20T10:54:05+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/05/20/about-this-blog</id>
+    <content type="html"><![CDATA[<p>关于博客
+以前就有写博客的，博客地址是<a href="http://yupeiliang110.blog.163.com">http://yupeiliang110.blog.163.com</a>
+欢迎大家前来学习交流。现在发现了很多人都用这个octopress 写技术博客，觉得挺好玩的，想试试，经过一天半时间，终于可以写东西了，窃喜，接下来继续改进。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[520]]></title>
+    <link href="http://yupliang.github.io/blog/2014/05/20/520/"/>
+    <updated>2014-05-20T09:18:58+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/05/20/520</id>
+    <content type="html"><![CDATA[<p>Dear Cherry,</p>
+
+<pre><code>its 520's day, so be happy. thanks for your supports. as you look this ,it seems that i have finish the blog. still i have to do some other works. anyhow , be happy.
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
