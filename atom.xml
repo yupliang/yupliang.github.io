@@ -4,7 +4,7 @@
   <title><![CDATA[My Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-05-20T18:11:38+08:00</updated>
+  <updated>2014-05-21T09:11:12+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Xcode5安装老版本模拟器]]></title>
+    <link href="http://yupliang.github.io/blog/2014/05/21/xcode5an-zhuang-lao-ban-ben-mo-ni-qi/"/>
+    <updated>2014-05-21T08:51:32+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/05/21/xcode5an-zhuang-lao-ban-ben-mo-ni-qi</id>
+    <content type="html"><![CDATA[<p>最近刚刚更新老了Xcode5.1.1，发现只有系统自带的iOS7.1模拟器，对于调试以前的版本，还需要安装老版本的模拟器。系统提供了一种从preference下载的方式，但是模拟器一般都会很大，非常的费劲。于是上网搜到了一种比较快捷的方式。一共3步</p>
+
+<p>1.从老版本Applications/Xcode.app/Contents/Developer/Platforms /iPhoneOS.platform/Developer/SDKs 拷贝Base Sdk到新版本Xcode对应目录下。</p>
+
+<p>2./Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs 对这个路径下进行如上的一次拷贝。</p>
+
+<p>3.关掉Xcode。重新打开系统会自动提示有新的包加入。按照提示做即可。</p>
+
+<p>原文链接：<a href="http://blog.csdn.net/kenera/article/details/12513287">http://blog.csdn.net/kenera/article/details/12513287</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[About This Blog]]></title>
