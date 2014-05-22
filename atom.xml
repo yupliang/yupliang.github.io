@@ -4,7 +4,7 @@
   <title><![CDATA[My Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-05-22T17:35:52+08:00</updated>
+  <updated>2014-05-22T19:04:32+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -74,6 +74,63 @@
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>方法调用，通过判断当前item和collectionview可视区域两个的中心间距同item的宽度来进行对比，以决定是否进行transform3D变换。变幻的时候添加了一个比例因子ZOOM_FACTOR，使缩放不会太夸张。</span></code></pre></td></tr></table></div></figure>
 
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (CGPoint)targetContentOffsetForProposedContentOffset: (CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
+</span><span class='line'>{
+</span><span class='line'>    
+</span><span class='line'>    //proposedContentOffset是没有对齐到网格时本来应该停下的位置
+</span><span class='line'>    CGFloat offsetAdjustment = MAXFLOAT;
+</span><span class='line'>    CGFloat horizontalCenter = proposedContentOffset.x + (CGRectGetWidth(self.collectionView.bounds) / 2.0);
+</span><span class='line'>    CGRect targetRect = CGRectMake(proposedContentOffset.x, 0.0, self.collectionView.bounds.size.width, self.collectionView.bounds.size.height);
+</span><span class='line'>    NSArray* array = [super layoutAttributesForElementsInRect:targetRect];
+</span><span class='line'>    
+</span><span class='line'>    //对当前屏幕中的UICollectionViewLayoutAttributes逐个与屏幕中心进行比较，找出最接近中心的一个
+</span><span class='line'>    for (UICollectionViewLayoutAttributes* layoutAttributes in array) {
+</span><span class='line'>        CGFloat itemHorizontalCenter = layoutAttributes.center.x;
+</span><span class='line'>        if (ABS(itemHorizontalCenter - horizontalCenter) &lt; ABS(offsetAdjustment)) {
+</span><span class='line'>            offsetAdjustment = itemHorizontalCenter - horizontalCenter;
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>    return CGPointMake(proposedContentOffset.x + offsetAdjustment, proposedContentOffset.y);
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对方法的看法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>与上个方法一样，需要求得可是区域的cgrect，通过该参数求出所有的UICollectionViewLayoutAttributes，然后用每个参数里的center和中心点求差比较，比较的算法就是如果当前差数比上一个差的绝对值小就记录下来。
+</span><span class='line'>最后返回的应该停下来的点，y不动，x加的当前记录的差值。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对UICollectionViewLayoutAttributes的看法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>UICollectionViewLayoutAttributes记录了一个元素所有与布局相关联的参数,仅此而已。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>原文链接：<a href="http://www.onevcat.com/2012/08/advanced-collection-view/">http://www.onevcat.com/2012/08/advanced-collection-view/</a></p>
 ]]></content>
   </entry>
   
