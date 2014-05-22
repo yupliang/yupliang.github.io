@@ -9,28 +9,8 @@
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="今天，真热啊。 看了看苹果官方工程LineLayout,记录下这段代码。 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22 -(NSArray*)layoutAttributesForElementsInRect:(CGRect) &hellip;">
+  <meta name="description" content="每一个新版本iOS出现之后，开发者会发现有一些方法会被NS_DEPRECATED_IOS（xx,xx）.这个宏定义是什么意思呢？ 1
+前面一个xx表明了这个方法被引入时的iOS版本，后面一个表明它被废弃时的iOS版本。被废弃并不是指这个方法就不存在了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,6 +66,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/22/ns-deprecated-ios/">NS_DEPRECATED_IOS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-22T19:17:20+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2014</time>
+        
+           | <a href="/blog/2014/05/22/ns-deprecated-ios/#disqus_thread"
+             data-disqus-identifier="http://yupliang.github.io/blog/2014/05/22/ns-deprecated-ios/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>每一个新版本iOS出现之后，开发者会发现有一些方法会被NS_DEPRECATED_IOS（xx,xx）.这个宏定义是什么意思呢？</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>前面一个xx表明了这个方法被引入时的iOS版本，后面一个表明它被废弃时的iOS版本。被废弃并不是指这个方法就不存在了，只是意味着我们应当开始考虑将相关代码迁移到新的API上去了。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>所以可以继续使用。
+原文链接 <a href="http://codingobjc.com/blog/2014/02/11/ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/">http://codingobjc.com/blog/2014/02/11/ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -380,6 +406,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/05/22/ns-deprecated-ios/">NS_DEPRECATED_IOS</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/05/22/collectionview-details/">CollectionView Details</a>

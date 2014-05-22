@@ -4,7 +4,7 @@
   <title><![CDATA[My Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-05-22T19:04:32+08:00</updated>
+  <updated>2014-05-22T19:21:28+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,22 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[NS_DEPRECATED_IOS]]></title>
+    <link href="http://yupliang.github.io/blog/2014/05/22/ns-deprecated-ios/"/>
+    <updated>2014-05-22T19:17:20+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/05/22/ns-deprecated-ios</id>
+    <content type="html"><![CDATA[<p>每一个新版本iOS出现之后，开发者会发现有一些方法会被NS_DEPRECATED_IOS（xx,xx）.这个宏定义是什么意思呢？</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>前面一个xx表明了这个方法被引入时的iOS版本，后面一个表明它被废弃时的iOS版本。被废弃并不是指这个方法就不存在了，只是意味着我们应当开始考虑将相关代码迁移到新的API上去了。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>所以可以继续使用。
+原文链接 <a href="http://codingobjc.com/blog/2014/02/11/ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/">http://codingobjc.com/blog/2014/02/11/ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CollectionView Details]]></title>
