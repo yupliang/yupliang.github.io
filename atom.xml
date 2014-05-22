@@ -4,7 +4,7 @@
   <title><![CDATA[My Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-05-21T09:11:12+08:00</updated>
+  <updated>2014-05-22T17:35:52+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,70 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CollectionView Details]]></title>
+    <link href="http://yupliang.github.io/blog/2014/05/22/collectionview-details/"/>
+    <updated>2014-05-22T17:21:04+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/05/22/collectionview-details</id>
+    <content type="html"><![CDATA[<p>今天，真热啊。</p>
+
+<p>看了看苹果官方工程LineLayout,记录下这段代码。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>    -(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
+</span><span class='line'>{
+</span><span class='line'>    NSArray* array = [super layoutAttributesForElementsInRect:rect];
+</span><span class='line'>    CGRect visibleRect;
+</span><span class='line'>    visibleRect.origin = self.collectionView.contentOffset;
+</span><span class='line'>    visibleRect.size = self.collectionView.bounds.size;
+</span><span class='line'>    
+</span><span class='line'>    for (UICollectionViewLayoutAttributes* attributes in array) {
+</span><span class='line'>        if (CGRectIntersectsRect(attributes.frame, rect)) {
+</span><span class='line'>            CGFloat distance = CGRectGetMidX(visibleRect) - attributes.center.x;
+</span><span class='line'>            CGFloat normalizedDistance = distance / ACTIVE_DISTANCE;
+</span><span class='line'>            if (ABS(distance) &lt; ACTIVE_DISTANCE) {
+</span><span class='line'>                CGFloat zoom = 1 + ZOOM_FACTOR*(1 - ABS(normalizedDistance));
+</span><span class='line'>                attributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1.0);
+</span><span class='line'>                attributes.zIndex = 1;
+</span><span class='line'>            }
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>    return array;
+</span><span class='line'>}
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对方法的看法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>方法调用，通过判断当前item和collectionview可视区域两个的中心间距同item的宽度来进行对比，以决定是否进行transform3D变换。变幻的时候添加了一个比例因子ZOOM_FACTOR，使缩放不会太夸张。</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Xcode5安装老版本模拟器]]></title>
