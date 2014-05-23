@@ -1,17 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Blog]]></title>
+  <title><![CDATA[Liang's Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-05-23T10:30:51+08:00</updated>
+  <updated>2014-05-23T14:23:39+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[yupliang]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Isequal == 区别]]></title>
+    <link href="http://yupliang.github.io/blog/2014/05/23/isequal-equals-equals-qu-bie/"/>
+    <updated>2014-05-23T14:20:42+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/05/23/isequal-equals-equals-qu-bie</id>
+    <content type="html"><![CDATA[<p>事情虽小有的人真愿意去做。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (BOOL)isEqual:(id)object {  
+</span><span class='line'>// By default, if two variables point to the same object in memory, it should always be // equal  
+</span><span class='line'>    if (object == self) {  
+</span><span class='line'>        return YES;   
+</span><span class='line'>    }  
+</span><span class='line'>    if (![object isKindOfClass:[MyItem class]]) {   
+</span><span class='line'>        return NO;  
+</span><span class='line'>    }  
+</span><span class='line'>    MyItem *myItem = (MyItem *)object;  
+</span><span class='line'>    return [myItem.identifier isEqual:self.identifier];   
+</span><span class='line'>}  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>上边便是isequal的方法内容，可以看出＝＝判断也包含在其中。</p>
+
+<p>原文链接: <a href="http://blog.csdn.net/devday/article/details/7594669">http://blog.csdn.net/devday/article/details/7594669</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CircleLayout]]></title>
