@@ -4,7 +4,7 @@
   <title><![CDATA[My Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-05-22T19:25:16+08:00</updated>
+  <updated>2014-05-23T10:30:51+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,89 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CircleLayout]]></title>
+    <link href="http://yupliang.github.io/blog/2014/05/23/circlelayout/"/>
+    <updated>2014-05-23T10:18:28+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/05/23/circlelayout</id>
+    <content type="html"><![CDATA[<p>今天继续看了下CircleLayout布局。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)path
+</span><span class='line'>{
+</span><span class='line'>    UICollectionViewLayoutAttributes* attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:path];
+</span><span class='line'>    attributes.size = CGSizeMake(ITEM_SIZE, ITEM_SIZE);
+</span><span class='line'>    attributes.center = CGPointMake(_center.x + _radius * cosf(2 * path.item * M_PI / _cellCount),
+</span><span class='line'>                                    _center.y + _radius * sinf(2 * path.item * M_PI / _cellCount));
+</span><span class='line'>    return attributes;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>用三角函数计算求得当前item在圆环上得位置。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForInsertedItemAtIndexPath:(NSIndexPath *)itemIndexPath
+</span><span class='line'>{
+</span><span class='line'>    UICollectionViewLayoutAttributes* attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
+</span><span class='line'>    attributes.alpha = 0.0;
+</span><span class='line'>    attributes.center = CGPointMake(_center.x, _center.y);
+</span><span class='line'>    return attributes;
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDeletedItemAtIndexPath:(NSIndexPath *)itemIndexPath
+</span><span class='line'>{
+</span><span class='line'>    UICollectionViewLayoutAttributes* attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
+</span><span class='line'>    attributes.alpha = 0.0;
+</span><span class='line'>    attributes.center = CGPointMake(_center.x, _center.y);
+</span><span class='line'>    attributes.transform3D = CATransform3DMakeScale(0.1, 0.1, 1.0);
+</span><span class='line'>    return attributes;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)performBatchUpdates:(void (^)(void))updates completion:(void (^)(BOOL finished))completion;该方法调用的时候会触发上边两个动画方法
+</span><span class='line'>
+</span><span class='line'>注意，现在这两个动画方法已经改掉了api名称，由下边两个替代
+</span><span class='line'>
+</span><span class='line'>- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath{
+</span><span class='line'>}
+</span><span class='line'>- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath{
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>原文链接 <a href="http://www.onevcat.com/2012/08/advanced-collection-view/">http://www.onevcat.com/2012/08/advanced-collection-view/</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[NS_DEPRECATED_IOS]]></title>
