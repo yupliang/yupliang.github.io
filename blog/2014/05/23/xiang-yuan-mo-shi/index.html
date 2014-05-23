@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>NS_DEPRECATED_IOS - Liang's Blog</title>
+  <title>享元模式 - Liang's Blog</title>
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="每一个新版本iOS出现之后，开发者会发现有一些方法会被NS_DEPRECATED_IOS（xx,xx）.这个宏定义是什么意思呢？ 1
-前面一个xx表明了这个方法被引入时的iOS版本，后面一个表明它被废弃时的iOS版本。被废弃并不是指这个方法就不存在了， &hellip;">
+  <meta name="description" content="享元模式 1
+享元模式(Flyweight Pattern)：运用共享技术有效地支持大量细粒度对象的复用。系统只使用少量的对象，而这些对象都很相似，状态变化很小，可以实现对象的多次复用。由于享元模式要求能够共享的对象必须是细粒度对象，因此它又称为轻量级模式，它是一种对象结构型模式。 两个核心英雄 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yupliang.github.io/blog/2014/05/22/ns-deprecated-ios">
+  <link rel="canonical" href="http://yupliang.github.io/blog/2014/05/23/xiang-yuan-mo-shi">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Liang's Blog" type="application/atom+xml">
@@ -69,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">NS_DEPRECATED_IOS</h1>
+      <h1 class="entry-title">享元模式</h1>
     
     
       <p class="meta">
@@ -85,7 +85,7 @@
   
 
 
-<time datetime="2014-05-22T19:17:20+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2014</time>
+<time datetime="2014-05-23T16:42:17+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://yupliang.github.io">Comments</a>
@@ -95,15 +95,23 @@
   </header>
 
 
-<div class="entry-content"><p>每一个新版本iOS出现之后，开发者会发现有一些方法会被NS_DEPRECATED_IOS（xx,xx）.这个宏定义是什么意思呢？</p>
+<div class="entry-content"><p>享元模式</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>前面一个xx表明了这个方法被引入时的iOS版本，后面一个表明它被废弃时的iOS版本。被废弃并不是指这个方法就不存在了，只是意味着我们应当开始考虑将相关代码迁移到新的API上去了。</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>享元模式(Flyweight Pattern)：运用共享技术有效地支持大量细粒度对象的复用。系统只使用少量的对象，而这些对象都很相似，状态变化很小，可以实现对象的多次复用。由于享元模式要求能够共享的对象必须是细粒度对象，因此它又称为轻量级模式，它是一种对象结构型模式。</span></code></pre></td></tr></table></div></figure>
 
 
-<p>所以可以继续使用。</p>
+<p>两个核心英雄</p>
 
-<p>原文链接 <a href="http://codingobjc.com/blog/2014/02/11/ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/">http://codingobjc.com/blog/2014/02/11/ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</a></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>享元 享元工厂</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在提到享元模式通常都会提到一个围棋游戏，因为一个围棋里边有300多棋子，如果每个棋子都采用一个新对象会非常占用内存，解决方法就是利用享元模式，提取内部共有属性白色／黑色。外部属性位置，大小（frame）.最终系统管理的棋子对象只有两个。</p>
+
+<p>我在写demo的时候发现如果是把每个棋子都addsubview到self.view上的话，会发现不论获取多少次，最终界面上只有两个棋子。思来想去最终发现采用drawrect的方式，前提是要把frame单独存取出来，比如可以用一个字典NSDictionary解决。</p>
+
+<p>原文链接:<a href="http://blog.csdn.net/lovelion/article/details/7667781">http://blog.csdn.net/lovelion/article/details/7667781</a></p>
 </div>
 
 
@@ -126,7 +134,7 @@
   
 
 
-<time datetime="2014-05-22T19:17:20+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2014</time>
+<time datetime="2014-05-23T16:42:17+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2014</time>
       
 
 
@@ -141,10 +149,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/05/22/collectionview-details/" title="Previous Post: CollectionView Details">&laquo; CollectionView Details</a>
+        <a class="basic-alignment left" href="/blog/2014/05/23/isequal-equals-equals-qu-bie/" title="Previous Post: isequal == 区别">&laquo; isequal == 区别</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/05/23/circlelayout/" title="Next Post: CircleLayout">CircleLayout &raquo;</a>
       
     </p>
   </footer>
@@ -226,8 +232,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yupliang.github.io/blog/2014/05/22/ns-deprecated-ios/';
-        var disqus_url = 'http://yupliang.github.io/blog/2014/05/22/ns-deprecated-ios/';
+        var disqus_identifier = 'http://yupliang.github.io/blog/2014/05/23/xiang-yuan-mo-shi/';
+        var disqus_url = 'http://yupliang.github.io/blog/2014/05/23/xiang-yuan-mo-shi/';
         var disqus_script = 'embed.js';
       
     (function () {

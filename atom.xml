@@ -4,7 +4,7 @@
   <title><![CDATA[Liang's Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-05-23T14:23:39+08:00</updated>
+  <updated>2014-05-23T16:52:08+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[yupliang]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[享元模式]]></title>
+    <link href="http://yupliang.github.io/blog/2014/05/23/xiang-yuan-mo-shi/"/>
+    <updated>2014-05-23T16:42:17+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/05/23/xiang-yuan-mo-shi</id>
+    <content type="html"><![CDATA[<p>享元模式</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>享元模式(Flyweight Pattern)：运用共享技术有效地支持大量细粒度对象的复用。系统只使用少量的对象，而这些对象都很相似，状态变化很小，可以实现对象的多次复用。由于享元模式要求能够共享的对象必须是细粒度对象，因此它又称为轻量级模式，它是一种对象结构型模式。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>两个核心英雄</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>享元 享元工厂</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在提到享元模式通常都会提到一个围棋游戏，因为一个围棋里边有300多棋子，如果每个棋子都采用一个新对象会非常占用内存，解决方法就是利用享元模式，提取内部共有属性白色／黑色。外部属性位置，大小（frame）.最终系统管理的棋子对象只有两个。</p>
+
+<p>我在写demo的时候发现如果是把每个棋子都addsubview到self.view上的话，会发现不论获取多少次，最终界面上只有两个棋子。思来想去最终发现采用drawrect的方式，前提是要把frame单独存取出来，比如可以用一个字典NSDictionary解决。</p>
+
+<p>原文链接:<a href="http://blog.csdn.net/lovelion/article/details/7667781">http://blog.csdn.net/lovelion/article/details/7667781</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Isequal == 区别]]></title>
