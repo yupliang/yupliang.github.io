@@ -5,12 +5,19 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>享元模式 - Liang's Blog</title>
+  <title>RAC - Liang's Blog</title>
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="享元模式 1
-享元模式(Flyweight Pattern)：运用共享技术有效地支持大量细粒度对象的复用。系统只使用少量的对象，而这些对象都很相似，状态变化很小，可以实现对象的多次复用。由于享元模式要求能够共享的对象必须是细粒度对象，因此它又称为轻量级模式，它是一种对象结构型模式。 两个核心英雄 &hellip;">
+  <meta name="description" content="核心英雄 1
+RAC RACSignal 样板代码 1
+2
+3
+4
+5
+6
+7
+RAC(self.clickbutton, enabled) = [RACSignal combineLatest:@[ self.username.rac_textSignal, self.p1. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yupliang.github.io/blog/2014/05/23/xiang-yuan-mo-shi">
+  <link rel="canonical" href="http://yupliang.github.io/blog/2014/06/05/rac">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Liang's Blog" type="application/atom+xml">
@@ -69,7 +76,7 @@
   
   <header>
     
-      <h1 class="entry-title">享元模式</h1>
+      <h1 class="entry-title">RAC</h1>
     
     
       <p class="meta">
@@ -85,7 +92,7 @@
   
 
 
-<time datetime="2014-05-23T16:42:17+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2014</time>
+<time datetime="2014-06-05T08:42:27+08:00" pubdate data-updated="true">Jun 5<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://yupliang.github.io">Comments</a>
@@ -95,23 +102,44 @@
   </header>
 
 
-<div class="entry-content"><p>享元模式</p>
+<div class="entry-content"><p>核心英雄</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>享元模式(Flyweight Pattern)：运用共享技术有效地支持大量细粒度对象的复用。系统只使用少量的对象，而这些对象都很相似，状态变化很小，可以实现对象的多次复用。由于享元模式要求能够共享的对象必须是细粒度对象，因此它又称为轻量级模式，它是一种对象结构型模式。</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>RAC RACSignal </span></code></pre></td></tr></table></div></figure>
 
 
-<p>两个核心英雄</p>
+<p>样板代码</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>享元 享元工厂</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>RAC(self.clickbutton, enabled) = [RACSignal combineLatest:@[
+</span><span class='line'>                                                                self.username.rac_textSignal,
+</span><span class='line'>                                                                self.p1.rac_textSignal,
+</span><span class='line'>                                                                self.p2.rac_textSignal
+</span><span class='line'>                                                                ] reduce:^id(NSString *name, NSString *p1, NSString *p2){
+</span><span class='line'>                                                                    return @(name.length &gt;0 && p1.length&gt;0 && p1 && [p1 isEqualToString:p2]);
+</span><span class='line'>                                                                }];
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>在提到享元模式通常都会提到一个围棋游戏，因为一个围棋里边有300多棋子，如果每个棋子都采用一个新对象会非常占用内存，解决方法就是利用享元模式，提取内部共有属性白色／黑色。外部属性位置，大小（frame）.最终系统管理的棋子对象只有两个。</p>
+<p>代码用来做表单验证，只有名字长度大于0，并且两次输入密码一致，且长度大于0时才可以点击。</p>
 
-<p>我在写demo的时候发现如果是把每个棋子都addsubview到self.view上的话，会发现不论获取多少次，最终界面上只有两个棋子。思来想去最终发现采用drawrect的方式，前提是要把frame单独存取出来，比如可以用一个字典NSDictionary解决。</p>
+<p>对概念通俗的解释：</p>
 
-<p>原文链接:<a href="http://blog.csdn.net/lovelion/article/details/7667781">http://blog.csdn.net/lovelion/article/details/7667781</a></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ReactiveCocoa是github去年开源的一个项目，是在iOS平台上对FRP的实现。FRP的核心是信号，信号在ReactiveCocoa(以下简称RAC)中是通过RACSignal来表示的，信号是数据流，可以被绑定和传递。
+</span><span class='line'>
+</span><span class='line'>可以把信号想象成水龙头，只不过里面不是水，而是玻璃球(value)，直径跟水管的内径一样，这样就能保证玻璃球是依次排列，不会出现并排的情况(数据都是线性处理的，不会出现并发情况)。水龙头的开关默认是关的，除非有了接收方(subscriber)，才会打开。这样只要有新的玻璃球进来，就会自动传送给接收方。可以在水龙头上加一个过滤嘴(filter)，不符合的不让通过，也可以加一个改动装置，把球改变成符合自己的需求(map)。也可以把多个水龙头合并成一个新的水龙头(combineLatest:reduce:)，这样只要其中的一个水龙头有玻璃球出来，这个新合并的水龙头就会得到这个球。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考文章:<a href="http://blog.leezhong.com/ios/2013/06/19/frp-reactivecocoa.html">http://blog.leezhong.com/ios/2013/06/19/frp-reactivecocoa.html</a></p>
 </div>
 
 
@@ -134,7 +162,7 @@
   
 
 
-<time datetime="2014-05-23T16:42:17+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2014</time>
+<time datetime="2014-06-05T08:42:27+08:00" pubdate data-updated="true">Jun 5<span>th</span>, 2014</time>
       
 
 
@@ -149,10 +177,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/05/23/isequal-equals-equals-qu-bie/" title="Previous Post: isequal == 区别">&laquo; isequal == 区别</a>
+        <a class="basic-alignment left" href="/blog/2014/05/23/xiang-yuan-mo-shi/" title="Previous Post: 享元模式">&laquo; 享元模式</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/06/05/rac/" title="Next Post: RAC">RAC &raquo;</a>
       
     </p>
   </footer>
@@ -234,8 +260,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yupliang.github.io/blog/2014/05/23/xiang-yuan-mo-shi/';
-        var disqus_url = 'http://yupliang.github.io/blog/2014/05/23/xiang-yuan-mo-shi/';
+        var disqus_identifier = 'http://yupliang.github.io/blog/2014/06/05/rac/';
+        var disqus_url = 'http://yupliang.github.io/blog/2014/06/05/rac/';
         var disqus_script = 'embed.js';
       
     (function () {

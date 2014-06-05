@@ -4,7 +4,7 @@
   <title><![CDATA[Liang's Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-05-23T16:52:08+08:00</updated>
+  <updated>2014-06-05T08:48:40+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[yupliang]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[RAC]]></title>
+    <link href="http://yupliang.github.io/blog/2014/06/05/rac/"/>
+    <updated>2014-06-05T08:42:27+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/06/05/rac</id>
+    <content type="html"><![CDATA[<p>核心英雄</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>RAC RACSignal </span></code></pre></td></tr></table></div></figure>
+
+
+<p>样板代码</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>RAC(self.clickbutton, enabled) = [RACSignal combineLatest:@[
+</span><span class='line'>                                                                self.username.rac_textSignal,
+</span><span class='line'>                                                                self.p1.rac_textSignal,
+</span><span class='line'>                                                                self.p2.rac_textSignal
+</span><span class='line'>                                                                ] reduce:^id(NSString *name, NSString *p1, NSString *p2){
+</span><span class='line'>                                                                    return @(name.length &gt;0 && p1.length&gt;0 && p1 && [p1 isEqualToString:p2]);
+</span><span class='line'>                                                                }];
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>代码用来做表单验证，只有名字长度大于0，并且两次输入密码一致，且长度大于0时才可以点击。</p>
+
+<p>对概念通俗的解释：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ReactiveCocoa是github去年开源的一个项目，是在iOS平台上对FRP的实现。FRP的核心是信号，信号在ReactiveCocoa(以下简称RAC)中是通过RACSignal来表示的，信号是数据流，可以被绑定和传递。
+</span><span class='line'>
+</span><span class='line'>可以把信号想象成水龙头，只不过里面不是水，而是玻璃球(value)，直径跟水管的内径一样，这样就能保证玻璃球是依次排列，不会出现并排的情况(数据都是线性处理的，不会出现并发情况)。水龙头的开关默认是关的，除非有了接收方(subscriber)，才会打开。这样只要有新的玻璃球进来，就会自动传送给接收方。可以在水龙头上加一个过滤嘴(filter)，不符合的不让通过，也可以加一个改动装置，把球改变成符合自己的需求(map)。也可以把多个水龙头合并成一个新的水龙头(combineLatest:reduce:)，这样只要其中的一个水龙头有玻璃球出来，这个新合并的水龙头就会得到这个球。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>参考文章:<a href="http://blog.leezhong.com/ios/2013/06/19/frp-reactivecocoa.html">http://blog.leezhong.com/ios/2013/06/19/frp-reactivecocoa.html</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[享元模式]]></title>
