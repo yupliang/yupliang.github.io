@@ -9,15 +9,15 @@
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="核心英雄 1
-RAC RACSignal 样板代码 1
+  <meta name="description" content="平时做开发经常用到json数据，这时候往往需要把json转换成程序内部的model方便做进一步的处理。推荐一款第三方工具Mantle。
+基本实现步骤 1
 2
 3
 4
 5
 6
 7
-RAC(self.clickbutton, enabled) = [RACSignal combineLatest:@[ self.username.rac_textSignal, self.p1. &hellip;">
+1.下载 https://github.com/Mantle/Mantle 2. 创建一个Model 类 ， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -73,6 +73,148 @@ RAC(self.clickbutton, enabled) = [RACSignal combineLatest:@[ self.username.rac_t
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/">简单的json Model映射工具</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-06T10:33:14+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/#disqus_thread"
+             data-disqus-identifier="http://yupliang.github.io/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>平时做开发经常用到json数据，这时候往往需要把json转换成程序内部的model方便做进一步的处理。推荐一款第三方工具Mantle。
+基本实现步骤</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.下载 https://github.com/Mantle/Mantle
+</span><span class='line'>
+</span><span class='line'>2. 创建一个Model 类 ，继承自MTLModel
+</span><span class='line'>
+</span><span class='line'>3. 实现映射协议 MTLJSONSerializing。协议里有一个require方法 JSONKeyPathsByPropertyKey
+</span><span class='line'>
+</span><span class='line'>4. 对于一些需要特殊处理的需要实现自适应的属性转换方法，该方法对于命名有一定要求，属性命＋JSONTransformer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>举例</p>
+
+<p>json原型如下</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dic {
+</span><span class='line'>    id = 10;
+</span><span class='line'>    name = xiangrikui;
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>model.h</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#import "MTLModel.h"
+</span><span class='line'>#import &lt;Mantle/MTLJSONAdapter.h&gt;
+</span><span class='line'>
+</span><span class='line'>@interface Picture : MTLModel&lt;MTLJSONSerializing&gt;
+</span><span class='line'>@property (nonatomic,copy) NSString *id;
+</span><span class='line'>@property (nonatomic,copy) NSString *picName;
+</span><span class='line'>@end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.m</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#import "Picture.h"
+</span><span class='line'>#import &lt;Mantle/MTLValueTransformer.h&gt;
+</span><span class='line'>
+</span><span class='line'>@implementation Picture
+</span><span class='line'>+ (NSDictionary *)JSONKeyPathsByPropertyKey{
+</span><span class='line'>    return @{
+</span><span class='line'>             @"id":@"id",
+</span><span class='line'>             @"picName":@"name"
+</span><span class='line'>             };
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>+ (NSValueTransformer *)picNameJSONTransformer {
+</span><span class='line'>    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSString *name) {
+</span><span class='line'>        return [name stringByAppendingString:@"_xx"];
+</span><span class='line'>    } reverseBlock:^id(NSString *name) {
+</span><span class='line'>        return [name substringToIndex:name.length-4];
+</span><span class='line'>    }];
+</span><span class='line'>}
+</span><span class='line'>@end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vc里的调用方式</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Picture *picture = [MTLJSONAdapter modelOfClass:[Picture class] fromJSONDictionary:dic error:nil];</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://yupliang.github.io">原创作品，转载请注明出处，谢谢。</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -727,6 +869,10 @@ RAC(self.clickbutton, enabled) = [RACSignal combineLatest:@[ self.username.rac_t
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/">简单的json Model映射工具</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/05/rac/">RAC</a>
       </li>
     
@@ -740,10 +886,6 @@ RAC(self.clickbutton, enabled) = [RACSignal combineLatest:@[ self.username.rac_t
     
       <li class="post">
         <a href="/blog/2014/05/23/circlelayout/">CircleLayout</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/22/ns-deprecated-ios/">NS_DEPRECATED_IOS</a>
       </li>
     
   </ul>

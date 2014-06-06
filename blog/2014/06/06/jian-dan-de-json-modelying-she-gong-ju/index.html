@@ -5,32 +5,19 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>CollectionView Details - Liang's Blog</title>
+  <title>简单的json Model映射工具 - Liang's Blog</title>
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="今天，真热啊。 看了看苹果官方工程LineLayout,记录下这段代码。 1
+  <meta name="description" content="平时做开发经常用到json数据，这时候往往需要把json转换成程序内部的model方便做进一步的处理。推荐一款第三方工具Mantle。
+基本实现步骤 1
 2
 3
 4
 5
 6
 7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22 -(NSArray*)layoutAttributesForElementsInRect:(CGRect) &hellip;">
+1.下载 https://github.com/Mantle/Mantle 2. 创建一个Model 类 ， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -39,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yupliang.github.io/blog/2014/05/22/collectionview-details">
+  <link rel="canonical" href="http://yupliang.github.io/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Liang's Blog" type="application/atom+xml">
@@ -89,7 +76,7 @@
   
   <header>
     
-      <h1 class="entry-title">CollectionView Details</h1>
+      <h1 class="entry-title">简单的json Model映射工具</h1>
     
     
       <p class="meta">
@@ -105,7 +92,7 @@
   
 
 
-<time datetime="2014-05-22T17:21:04+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2014</time>
+<time datetime="2014-06-06T10:33:14+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://yupliang.github.io">Comments</a>
@@ -115,9 +102,61 @@
   </header>
 
 
-<div class="entry-content"><p>今天，真热啊。</p>
+<div class="entry-content"><p>平时做开发经常用到json数据，这时候往往需要把json转换成程序内部的model方便做进一步的处理。推荐一款第三方工具Mantle。
+基本实现步骤</p>
 
-<p>看了看苹果官方工程LineLayout,记录下这段代码。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.下载 https://github.com/Mantle/Mantle
+</span><span class='line'>
+</span><span class='line'>2. 创建一个Model 类 ，继承自MTLModel
+</span><span class='line'>
+</span><span class='line'>3. 实现映射协议 MTLJSONSerializing。协议里有一个require方法 JSONKeyPathsByPropertyKey
+</span><span class='line'>
+</span><span class='line'>4. 对于一些需要特殊处理的需要实现自适应的属性转换方法，该方法对于命名有一定要求，属性命＋JSONTransformer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>举例</p>
+
+<p>json原型如下</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dic {
+</span><span class='line'>    id = 10;
+</span><span class='line'>    name = xiangrikui;
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>model.h</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#import "MTLModel.h"
+</span><span class='line'>#import &lt;Mantle/MTLJSONAdapter.h&gt;
+</span><span class='line'>
+</span><span class='line'>@interface Picture : MTLModel&lt;MTLJSONSerializing&gt;
+</span><span class='line'>@property (nonatomic,copy) NSString *id;
+</span><span class='line'>@property (nonatomic,copy) NSString *picName;
+</span><span class='line'>@end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.m</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -138,96 +177,35 @@
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>    -(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
-</span><span class='line'>{
-</span><span class='line'>    NSArray* array = [super layoutAttributesForElementsInRect:rect];
-</span><span class='line'>    CGRect visibleRect;
-</span><span class='line'>    visibleRect.origin = self.collectionView.contentOffset;
-</span><span class='line'>    visibleRect.size = self.collectionView.bounds.size;
-</span><span class='line'>    
-</span><span class='line'>    for (UICollectionViewLayoutAttributes* attributes in array) {
-</span><span class='line'>        if (CGRectIntersectsRect(attributes.frame, rect)) {
-</span><span class='line'>            CGFloat distance = CGRectGetMidX(visibleRect) - attributes.center.x;
-</span><span class='line'>            CGFloat normalizedDistance = distance / ACTIVE_DISTANCE;
-</span><span class='line'>            if (ABS(distance) &lt; ACTIVE_DISTANCE) {
-</span><span class='line'>                CGFloat zoom = 1 + ZOOM_FACTOR*(1 - ABS(normalizedDistance));
-</span><span class='line'>                attributes.transform3D = CATransform3DMakeScale(zoom, zoom, 1.0);
-</span><span class='line'>                attributes.zIndex = 1;
-</span><span class='line'>            }
-</span><span class='line'>        }
-</span><span class='line'>    }
-</span><span class='line'>    return array;
+</pre></td><td class='code'><pre><code class=''><span class='line'>#import "Picture.h"
+</span><span class='line'>#import &lt;Mantle/MTLValueTransformer.h&gt;
+</span><span class='line'>
+</span><span class='line'>@implementation Picture
+</span><span class='line'>+ (NSDictionary *)JSONKeyPathsByPropertyKey{
+</span><span class='line'>    return @{
+</span><span class='line'>             @"id":@"id",
+</span><span class='line'>             @"picName":@"name"
+</span><span class='line'>             };
 </span><span class='line'>}
 </span><span class='line'>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>对方法的看法</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>方法调用，通过判断当前item和collectionview可视区域两个的中心间距同item的宽度来进行对比，以决定是否进行transform3D变换。变幻的时候添加了一个比例因子ZOOM_FACTOR，使缩放不会太夸张。</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (CGPoint)targetContentOffsetForProposedContentOffset: (CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
-</span><span class='line'>{
-</span><span class='line'>    
-</span><span class='line'>    //proposedContentOffset是没有对齐到网格时本来应该停下的位置
-</span><span class='line'>    CGFloat offsetAdjustment = MAXFLOAT;
-</span><span class='line'>    CGFloat horizontalCenter = proposedContentOffset.x + (CGRectGetWidth(self.collectionView.bounds) / 2.0);
-</span><span class='line'>    CGRect targetRect = CGRectMake(proposedContentOffset.x, 0.0, self.collectionView.bounds.size.width, self.collectionView.bounds.size.height);
-</span><span class='line'>    NSArray* array = [super layoutAttributesForElementsInRect:targetRect];
-</span><span class='line'>    
-</span><span class='line'>    //对当前屏幕中的UICollectionViewLayoutAttributes逐个与屏幕中心进行比较，找出最接近中心的一个
-</span><span class='line'>    for (UICollectionViewLayoutAttributes* layoutAttributes in array) {
-</span><span class='line'>        CGFloat itemHorizontalCenter = layoutAttributes.center.x;
-</span><span class='line'>        if (ABS(itemHorizontalCenter - horizontalCenter) &lt; ABS(offsetAdjustment)) {
-</span><span class='line'>            offsetAdjustment = itemHorizontalCenter - horizontalCenter;
-</span><span class='line'>        }
-</span><span class='line'>    }
-</span><span class='line'>    return CGPointMake(proposedContentOffset.x + offsetAdjustment, proposedContentOffset.y);
+</span><span class='line'>+ (NSValueTransformer *)picNameJSONTransformer {
+</span><span class='line'>    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSString *name) {
+</span><span class='line'>        return [name stringByAppendingString:@"_xx"];
+</span><span class='line'>    } reverseBlock:^id(NSString *name) {
+</span><span class='line'>        return [name substringToIndex:name.length-4];
+</span><span class='line'>    }];
 </span><span class='line'>}
+</span><span class='line'>@end
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>对方法的看法</p>
+<p>vc里的调用方式</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>与上个方法一样，需要求得可是区域的cgrect，通过该参数求出所有的UICollectionViewLayoutAttributes，然后用每个参数里的center和中心点求差比较，比较的算法就是如果当前差数比上一个差的绝对值小就记录下来。
-</span><span class='line'>最后返回的应该停下来的点，y不动，x加的当前记录的差值。</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Picture *picture = [MTLJSONAdapter modelOfClass:[Picture class] fromJSONDictionary:dic error:nil];</span></code></pre></td></tr></table></div></figure>
 
 
-<p>对UICollectionViewLayoutAttributes的看法</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>UICollectionViewLayoutAttributes记录了一个元素所有与布局相关联的参数,仅此而已。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>原文链接：<a href="http://www.onevcat.com/2012/08/advanced-collection-view/">http://www.onevcat.com/2012/08/advanced-collection-view/</a></p>
+<p><a href="http://yupliang.github.io">原创作品，转载请注明出处，谢谢。</a></p>
 </div>
 
 
@@ -250,7 +228,7 @@
   
 
 
-<time datetime="2014-05-22T17:21:04+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2014</time>
+<time datetime="2014-06-06T10:33:14+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
       
 
 
@@ -265,10 +243,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/05/21/xcode5an-zhuang-lao-ban-ben-mo-ni-qi/" title="Previous Post: Xcode5安装老版本模拟器">&laquo; Xcode5安装老版本模拟器</a>
+        <a class="basic-alignment left" href="/blog/2014/06/05/rac/" title="Previous Post: RAC">&laquo; RAC</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/05/22/ns-deprecated-ios/" title="Next Post: NS_DEPRECATED_IOS">NS_DEPRECATED_IOS &raquo;</a>
       
     </p>
   </footer>
@@ -350,8 +326,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yupliang.github.io/blog/2014/05/22/collectionview-details/';
-        var disqus_url = 'http://yupliang.github.io/blog/2014/05/22/collectionview-details/';
+        var disqus_identifier = 'http://yupliang.github.io/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/';
+        var disqus_url = 'http://yupliang.github.io/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/';
         var disqus_script = 'embed.js';
       
     (function () {
