@@ -9,15 +9,14 @@
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="平时做开发经常用到json数据，这时候往往需要把json转换成程序内部的model方便做进一步的处理。推荐一款第三方工具Mantle。
-基本实现步骤 1
+  <meta name="description" content="开发中免不了会添加一些静态库。这里分享一下添加步骤 1
 2
 3
 4
 5
 6
-7
-1.下载 https://github.com/Mantle/Mantle 2. 创建一个Model 类 ， &hellip;">
+1.加入一個新的Header Search Path。此步骤意在添加静态库的.h文件，比如该文件放在你工程的根目录下的include文件夹下。
+targets中选择工程，搜索header search， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -73,6 +72,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/06/tian-jia-jing-tai-ku/">添加静态库</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-06T15:32:33+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/06/06/tian-jia-jing-tai-ku/#disqus_thread"
+             data-disqus-identifier="http://yupliang.github.io/blog/2014/06/06/tian-jia-jing-tai-ku/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>开发中免不了会添加一些静态库。这里分享一下添加步骤</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.加入一個新的Header Search Path。此步骤意在添加静态库的.h文件，比如该文件放在你工程的根目录下的include文件夹下。
+</span><span class='line'>targets中选择工程，搜索header search，然后添加一个新的search path。输入$SOURCE_ROOT/include
+</span><span class='line'>
+</span><span class='line'>2.在build phases中的Link Binary With Libraries选项下边添加.a依赖。
+</span><span class='line'>
+</span><span class='line'>3.在buldsettings的other link flags 下添加-ObjC标记。這個連結會試著有效率的引入需要的程式碼，有時可以排除static library程式碼。有了這個標誌，所有Objective-C class和library中的類別都可以正確加載。
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>原文链接：<a href="http://www.raywenderlich.com/zh-hans/73864/%E5%BB%BA%E7%AB%8B-ios-%E9%9D%9C%E6%85%8B%E5%87%BD%E5%BC%8F%E5%BA%AB">http://www.raywenderlich.com/zh-hans/73864/%E5%BB%BA%E7%AB%8B-ios-%E9%9D%9C%E6%85%8B%E5%87%BD%E5%BC%8F%E5%BA%AB</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -814,49 +869,9 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/20/520/">520</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-20T09:18:58+08:00" pubdate data-updated="true">May 20<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/05/20/520/#disqus_thread"
-             data-disqus-identifier="http://yupliang.github.io/blog/2014/05/20/520/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Dear Cherry,</p>
-
-<pre><code>its 520's day, so be happy. thanks for your supports. as you look this ,it seems that i have finish the blog. still i have to do some other works. anyhow , be happy.
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -867,6 +882,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/06/tian-jia-jing-tai-ku/">添加静态库</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/">简单的json Model映射工具</a>
@@ -882,10 +901,6 @@
     
       <li class="post">
         <a href="/blog/2014/05/23/isequal-equals-equals-qu-bie/">Isequal == 区别</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/23/circlelayout/">CircleLayout</a>
       </li>
     
   </ul>

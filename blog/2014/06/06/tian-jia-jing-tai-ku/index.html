@@ -5,20 +5,18 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>CircleLayout - Liang's Blog</title>
+  <title>添加静态库 - Liang's Blog</title>
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="今天继续看了下CircleLayout布局。 1
+  <meta name="description" content="开发中免不了会添加一些静态库。这里分享一下添加步骤 1
 2
 3
 4
 5
 6
-7
-8
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)path
-{ &hellip;">
+1.加入一個新的Header Search Path。此步骤意在添加静态库的.h文件，比如该文件放在你工程的根目录下的include文件夹下。
+targets中选择工程，搜索header search， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,7 +25,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yupliang.github.io/blog/2014/05/23/circlelayout">
+  <link rel="canonical" href="http://yupliang.github.io/blog/2014/06/06/tian-jia-jing-tai-ku">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Liang's Blog" type="application/atom+xml">
@@ -77,7 +75,7 @@
   
   <header>
     
-      <h1 class="entry-title">CircleLayout</h1>
+      <h1 class="entry-title">添加静态库</h1>
     
     
       <p class="meta">
@@ -93,7 +91,7 @@
   
 
 
-<time datetime="2014-05-23T10:18:28+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2014</time>
+<time datetime="2014-06-06T15:32:33+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://yupliang.github.io">Comments</a>
@@ -103,7 +101,7 @@
   </header>
 
 
-<div class="entry-content"><p>今天继续看了下CircleLayout布局。</p>
+<div class="entry-content"><p>开发中免不了会添加一些静态库。这里分享一下添加步骤</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -111,73 +109,16 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)path
-</span><span class='line'>{
-</span><span class='line'>    UICollectionViewLayoutAttributes* attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:path];
-</span><span class='line'>    attributes.size = CGSizeMake(ITEM_SIZE, ITEM_SIZE);
-</span><span class='line'>    attributes.center = CGPointMake(_center.x + _radius * cosf(2 * path.item * M_PI / _cellCount),
-</span><span class='line'>                                    _center.y + _radius * sinf(2 * path.item * M_PI / _cellCount));
-</span><span class='line'>    return attributes;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>用三角函数计算求得当前item在圆环上得位置。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForInsertedItemAtIndexPath:(NSIndexPath *)itemIndexPath
-</span><span class='line'>{
-</span><span class='line'>    UICollectionViewLayoutAttributes* attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
-</span><span class='line'>    attributes.alpha = 0.0;
-</span><span class='line'>    attributes.center = CGPointMake(_center.x, _center.y);
-</span><span class='line'>    return attributes;
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.加入一個新的Header Search Path。此步骤意在添加静态库的.h文件，比如该文件放在你工程的根目录下的include文件夹下。
+</span><span class='line'>targets中选择工程，搜索header search，然后添加一个新的search path。输入$SOURCE_ROOT/include
 </span><span class='line'>
-</span><span class='line'>- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDeletedItemAtIndexPath:(NSIndexPath *)itemIndexPath
-</span><span class='line'>{
-</span><span class='line'>    UICollectionViewLayoutAttributes* attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
-</span><span class='line'>    attributes.alpha = 0.0;
-</span><span class='line'>    attributes.center = CGPointMake(_center.x, _center.y);
-</span><span class='line'>    attributes.transform3D = CATransform3DMakeScale(0.1, 0.1, 1.0);
-</span><span class='line'>    return attributes;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)performBatchUpdates:(void (^)(void))updates completion:(void (^)(BOOL finished))completion;该方法调用的时候会触发上边两个动画方法
+</span><span class='line'>2.在build phases中的Link Binary With Libraries选项下边添加.a依赖。
 </span><span class='line'>
-</span><span class='line'>注意，现在这两个动画方法已经改掉了api名称，由下边两个替代
-</span><span class='line'>
-</span><span class='line'>- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath{
-</span><span class='line'>}
-</span><span class='line'>- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath{
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>3.在buldsettings的other link flags 下添加-ObjC标记。這個連結會試著有效率的引入需要的程式碼，有時可以排除static library程式碼。有了這個標誌，所有Objective-C class和library中的類別都可以正確加載。
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>原文链接 <a href="http://www.onevcat.com/2012/08/advanced-collection-view/">http://www.onevcat.com/2012/08/advanced-collection-view/</a></p>
+<p>原文链接：<a href="http://www.raywenderlich.com/zh-hans/73864/%E5%BB%BA%E7%AB%8B-ios-%E9%9D%9C%E6%85%8B%E5%87%BD%E5%BC%8F%E5%BA%AB">http://www.raywenderlich.com/zh-hans/73864/%E5%BB%BA%E7%AB%8B-ios-%E9%9D%9C%E6%85%8B%E5%87%BD%E5%BC%8F%E5%BA%AB</a></p>
 </div>
 
 
@@ -200,7 +141,7 @@
   
 
 
-<time datetime="2014-05-23T10:18:28+08:00" pubdate data-updated="true">May 23<span>rd</span>, 2014</time>
+<time datetime="2014-06-06T15:32:33+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
       
 
 
@@ -215,10 +156,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/05/22/ns-deprecated-ios/" title="Previous Post: NS_DEPRECATED_IOS">&laquo; NS_DEPRECATED_IOS</a>
+        <a class="basic-alignment left" href="/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/" title="Previous Post: 简单的json model映射工具">&laquo; 简单的json model映射工具</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/05/23/isequal-equals-equals-qu-bie/" title="Next Post: isequal == 区别">isequal == 区别 &raquo;</a>
       
     </p>
   </footer>
@@ -300,8 +239,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yupliang.github.io/blog/2014/05/23/circlelayout/';
-        var disqus_url = 'http://yupliang.github.io/blog/2014/05/23/circlelayout/';
+        var disqus_identifier = 'http://yupliang.github.io/blog/2014/06/06/tian-jia-jing-tai-ku/';
+        var disqus_url = 'http://yupliang.github.io/blog/2014/06/06/tian-jia-jing-tai-ku/';
         var disqus_script = 'embed.js';
       
     (function () {
