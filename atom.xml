@@ -4,7 +4,7 @@
   <title><![CDATA[Liang's Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-06-06T15:41:27+08:00</updated>
+  <updated>2014-06-09T11:43:45+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[yupliang]]></name>
@@ -12,6 +12,86 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[百度移动统计]]></title>
+    <link href="http://yupliang.github.io/blog/2014/06/09/bai-du-yi-dong-tong-ji/"/>
+    <updated>2014-06-09T11:25:21+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/06/09/bai-du-yi-dong-tong-ji</id>
+    <content type="html"><![CDATA[<p>进行用户分析，在app发布以后也比较关键。百度移动统计帮我们做了大部分的工作，我们需要把百度移动统计加入到工程中来。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.首先下载百度移动统计SDK。我集成的时候下载的是3.22版本。sdk目录如下
+</span><span class='line'><img src="http://yupliang.github.io/images/00.png"> 
+</span><span class='line'>2. 在ios_api／Release-iphonesimulator中存在测试用的.a文件和.h文件，上篇博客中提到的集成静态库方式会很好的完成这个工作。
+</span><span class='line'>3.TouchJSON第三方框架是集成所需要的，但是采用了非arc的方式，现在建立的工程默认会是arc的，大家可以添加非arc标识 －fnobjc-arc,还有一种比较不错的方式利用cocopods方式自己下载一个，下载下来的默认就是arc的。
+</span><span class='line'>
+</span><span class='line'>platform :ios, '7.0'
+</span><span class='line'>pod 'TouchJSON'
+</span><span class='line'>4.在ios_demo文件夹下打开demo。
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
+</span><span class='line'>statTracker.enableExceptionLog = NO;
+</span><span class='line'>statTracker.logStrategy = BaiduMobStatLogStrategyCustom;
+</span><span class='line'>statTracker.logSendInterval = 1;
+</span><span class='line'>statTracker.logSendWifiOnly = YES;
+</span><span class='line'>statTracker.sessionResumeInterval = 1;
+</span><span class='line'>statTracker.enableDebugOn = YES;//这句代码是调试必须要用到的，如果是打包，就去掉。
+</span><span class='line'>[statTracker startWithAppId:@"bcab3780c3"];</span></code></pre></td></tr></table></div></figure>
+
+
+<p>统计页面</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)viewDidAppear:(BOOL)animated{
+</span><span class='line'>    NSString *className = [[self class] description];
+</span><span class='line'>    NSLog(@"%s,%@", __FUNCTION__,className);
+</span><span class='line'>    [[BaiduMobStat defaultStat] pageviewStartWithName:className];
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)viewDidDisappear:(BOOL)animated{
+</span><span class='line'>    NSString *className = [[self class] description];
+</span><span class='line'>    NSLog(@"%s,%@", __FUNCTION__,className);
+</span><span class='line'>    [[BaiduMobStat defaultStat] pageviewEndWithName:className];
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://yupliang.github.io">原创作品，转载请注明出处，谢谢。</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[添加静态库]]></title>

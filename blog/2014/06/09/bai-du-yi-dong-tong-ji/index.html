@@ -5,19 +5,20 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>简单的json Model映射工具 - Liang's Blog</title>
+  <title>百度移动统计 - Liang's Blog</title>
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="平时做开发经常用到json数据，这时候往往需要把json转换成程序内部的model方便做进一步的处理。推荐一款第三方工具Mantle。
-基本实现步骤 1
+  <meta name="description" content="进行用户分析，在app发布以后也比较关键。百度移动统计帮我们做了大部分的工作，我们需要把百度移动统计加入到工程中来。 1
 2
 3
 4
 5
 6
 7
-1.下载 https://github.com/Mantle/Mantle 2. 创建一个Model 类 ， &hellip;">
+8
+9
+1.首先下载百度移动统计SDK。我集成的时候下载的是3.22版本。sdk目录如下 2. 在ios_api／Release- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,7 +27,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yupliang.github.io/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju">
+  <link rel="canonical" href="http://yupliang.github.io/blog/2014/06/09/bai-du-yi-dong-tong-ji">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Liang's Blog" type="application/atom+xml">
@@ -76,7 +77,7 @@
   
   <header>
     
-      <h1 class="entry-title">简单的json Model映射工具</h1>
+      <h1 class="entry-title">百度移动统计</h1>
     
     
       <p class="meta">
@@ -92,7 +93,7 @@
   
 
 
-<time datetime="2014-06-06T10:33:14+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
+<time datetime="2014-06-09T11:25:21+08:00" pubdate data-updated="true">Jun 9<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://yupliang.github.io">Comments</a>
@@ -102,61 +103,7 @@
   </header>
 
 
-<div class="entry-content"><p>平时做开发经常用到json数据，这时候往往需要把json转换成程序内部的model方便做进一步的处理。推荐一款第三方工具Mantle。
-基本实现步骤</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>1.下载 https://github.com/Mantle/Mantle
-</span><span class='line'>
-</span><span class='line'>2. 创建一个Model 类 ，继承自MTLModel
-</span><span class='line'>
-</span><span class='line'>3. 实现映射协议 MTLJSONSerializing。协议里有一个require方法 JSONKeyPathsByPropertyKey
-</span><span class='line'>
-</span><span class='line'>4. 对于一些需要特殊处理的需要实现自适应的属性转换方法，该方法对于命名有一定要求，属性命＋JSONTransformer
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>举例</p>
-
-<p>json原型如下</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>dic {
-</span><span class='line'>    id = 10;
-</span><span class='line'>    name = xiangrikui;
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>model.h</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#import "MTLModel.h"
-</span><span class='line'>#import &lt;Mantle/MTLJSONAdapter.h&gt;
-</span><span class='line'>
-</span><span class='line'>@interface Picture : MTLModel&lt;MTLJSONSerializing&gt;
-</span><span class='line'>@property (nonatomic,copy) NSString *id;
-</span><span class='line'>@property (nonatomic,copy) NSString *picName;
-</span><span class='line'>@end
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>.m</p>
+<div class="entry-content"><p>进行用户分析，在app发布以后也比较关键。百度移动统计帮我们做了大部分的工作，我们需要把百度移动统计加入到工程中来。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -167,42 +114,64 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#import "Picture.h"
-</span><span class='line'>#import &lt;Mantle/MTLValueTransformer.h&gt;
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.首先下载百度移动统计SDK。我集成的时候下载的是3.22版本。sdk目录如下
+</span><span class='line'><img src="/images/00.png"> 
+</span><span class='line'>2. 在ios_api／Release-iphonesimulator中存在测试用的.a文件和.h文件，上篇博客中提到的集成静态库方式会很好的完成这个工作。
+</span><span class='line'>3.TouchJSON第三方框架是集成所需要的，但是采用了非arc的方式，现在建立的工程默认会是arc的，大家可以添加非arc标识 －fnobjc-arc,还有一种比较不错的方式利用cocopods方式自己下载一个，下载下来的默认就是arc的。
 </span><span class='line'>
-</span><span class='line'>@implementation Picture
-</span><span class='line'>+ (NSDictionary *)JSONKeyPathsByPropertyKey{
-</span><span class='line'>    return @{
-</span><span class='line'>             @"id":@"id",
-</span><span class='line'>             @"picName":@"name"
-</span><span class='line'>             };
-</span><span class='line'>}
+</span><span class='line'>platform :ios, '7.0'
+</span><span class='line'>pod 'TouchJSON'
+</span><span class='line'>4.在ios_demo文件夹下打开demo。
 </span><span class='line'>
-</span><span class='line'>+ (NSValueTransformer *)picNameJSONTransformer {
-</span><span class='line'>    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSString *name) {
-</span><span class='line'>        return [name stringByAppendingString:@"_xx"];
-</span><span class='line'>    } reverseBlock:^id(NSString *name) {
-</span><span class='line'>        return [name substringToIndex:name.length-4];
-</span><span class='line'>    }];
-</span><span class='line'>}
-</span><span class='line'>@end
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>vc里的调用方式</p>
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Picture *picture = [MTLJSONAdapter modelOfClass:[Picture class] fromJSONDictionary:dic error:nil];</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
+</span><span class='line'>statTracker.enableExceptionLog = NO;
+</span><span class='line'>statTracker.logStrategy = BaiduMobStatLogStrategyCustom;
+</span><span class='line'>statTracker.logSendInterval = 1;
+</span><span class='line'>statTracker.logSendWifiOnly = YES;
+</span><span class='line'>statTracker.sessionResumeInterval = 1;
+</span><span class='line'>statTracker.enableDebugOn = YES;//这句代码是调试必须要用到的，如果是打包，就去掉。
+</span><span class='line'>[statTracker startWithAppId:@"bcab3780c3"];</span></code></pre></td></tr></table></div></figure>
+
+
+<p>统计页面</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)viewDidAppear:(BOOL)animated{
+</span><span class='line'>    NSString *className = [[self class] description];
+</span><span class='line'>    NSLog(@"%s,%@", __FUNCTION__,className);
+</span><span class='line'>    [[BaiduMobStat defaultStat] pageviewStartWithName:className];
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)viewDidDisappear:(BOOL)animated{
+</span><span class='line'>    NSString *className = [[self class] description];
+</span><span class='line'>    NSLog(@"%s,%@", __FUNCTION__,className);
+</span><span class='line'>    [[BaiduMobStat defaultStat] pageviewEndWithName:className];
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
 <p><a href="http://yupliang.github.io">原创作品，转载请注明出处，谢谢。</a></p>
@@ -228,7 +197,7 @@
   
 
 
-<time datetime="2014-06-06T10:33:14+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
+<time datetime="2014-06-09T11:25:21+08:00" pubdate data-updated="true">Jun 9<span>th</span>, 2014</time>
       
 
 
@@ -243,10 +212,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/06/05/rac/" title="Previous Post: RAC">&laquo; RAC</a>
+        <a class="basic-alignment left" href="/blog/2014/06/06/tian-jia-jing-tai-ku/" title="Previous Post: 添加静态库">&laquo; 添加静态库</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/06/06/tian-jia-jing-tai-ku/" title="Next Post: 添加静态库">添加静态库 &raquo;</a>
       
     </p>
   </footer>
@@ -328,8 +295,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yupliang.github.io/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/';
-        var disqus_url = 'http://yupliang.github.io/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/';
+        var disqus_identifier = 'http://yupliang.github.io/blog/2014/06/09/bai-du-yi-dong-tong-ji/';
+        var disqus_url = 'http://yupliang.github.io/blog/2014/06/09/bai-du-yi-dong-tong-ji/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -9,14 +9,16 @@
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="开发中免不了会添加一些静态库。这里分享一下添加步骤 1
+  <meta name="description" content="进行用户分析，在app发布以后也比较关键。百度移动统计帮我们做了大部分的工作，我们需要把百度移动统计加入到工程中来。 1
 2
 3
 4
 5
 6
-1.加入一個新的Header Search Path。此步骤意在添加静态库的.h文件，比如该文件放在你工程的根目录下的include文件夹下。
-targets中选择工程，搜索header search， &hellip;">
+7
+8
+9
+1.首先下载百度移动统计SDK。我集成的时候下载的是3.22版本。sdk目录如下 2. 在ios_api／Release- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,6 +74,116 @@ targets中选择工程，搜索header search， &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/09/bai-du-yi-dong-tong-ji/">百度移动统计</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-09T11:25:21+08:00" pubdate data-updated="true">Jun 9<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/06/09/bai-du-yi-dong-tong-ji/#disqus_thread"
+             data-disqus-identifier="http://yupliang.github.io/blog/2014/06/09/bai-du-yi-dong-tong-ji/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>进行用户分析，在app发布以后也比较关键。百度移动统计帮我们做了大部分的工作，我们需要把百度移动统计加入到工程中来。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.首先下载百度移动统计SDK。我集成的时候下载的是3.22版本。sdk目录如下
+</span><span class='line'><img src="/images/00.png"> 
+</span><span class='line'>2. 在ios_api／Release-iphonesimulator中存在测试用的.a文件和.h文件，上篇博客中提到的集成静态库方式会很好的完成这个工作。
+</span><span class='line'>3.TouchJSON第三方框架是集成所需要的，但是采用了非arc的方式，现在建立的工程默认会是arc的，大家可以添加非arc标识 －fnobjc-arc,还有一种比较不错的方式利用cocopods方式自己下载一个，下载下来的默认就是arc的。
+</span><span class='line'>
+</span><span class='line'>platform :ios, '7.0'
+</span><span class='line'>pod 'TouchJSON'
+</span><span class='line'>4.在ios_demo文件夹下打开demo。
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
+</span><span class='line'>statTracker.enableExceptionLog = NO;
+</span><span class='line'>statTracker.logStrategy = BaiduMobStatLogStrategyCustom;
+</span><span class='line'>statTracker.logSendInterval = 1;
+</span><span class='line'>statTracker.logSendWifiOnly = YES;
+</span><span class='line'>statTracker.sessionResumeInterval = 1;
+</span><span class='line'>statTracker.enableDebugOn = YES;//这句代码是调试必须要用到的，如果是打包，就去掉。
+</span><span class='line'>[statTracker startWithAppId:@"bcab3780c3"];</span></code></pre></td></tr></table></div></figure>
+
+
+<p>统计页面</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)viewDidAppear:(BOOL)animated{
+</span><span class='line'>    NSString *className = [[self class] description];
+</span><span class='line'>    NSLog(@"%s,%@", __FUNCTION__,className);
+</span><span class='line'>    [[BaiduMobStat defaultStat] pageviewStartWithName:className];
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- (void)viewDidDisappear:(BOOL)animated{
+</span><span class='line'>    NSString *className = [[self class] description];
+</span><span class='line'>    NSLog(@"%s,%@", __FUNCTION__,className);
+</span><span class='line'>    [[BaiduMobStat defaultStat] pageviewEndWithName:className];
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://yupliang.github.io">原创作品，转载请注明出处，谢谢。</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -827,48 +939,6 @@ targets中选择工程，搜索header search， &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/20/about-this-blog/">About This Blog</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-20T10:54:05+08:00" pubdate data-updated="true">May 20<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/05/20/about-this-blog/#disqus_thread"
-             data-disqus-identifier="http://yupliang.github.io/blog/2014/05/20/about-this-blog/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>关于博客
-以前就有写博客的，博客地址是<a href="http://yupeiliang110.blog.163.com">http://yupeiliang110.blog.163.com</a>
-欢迎大家前来学习交流。现在发现了很多人都用这个octopress 写技术博客，觉得挺好玩的，想试试，经过一天半时间，终于可以写东西了，窃喜，接下来继续改进。
-<img src="/images/222.png"></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -884,6 +954,10 @@ targets中选择工程，搜索header search， &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/09/bai-du-yi-dong-tong-ji/">百度移动统计</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/06/tian-jia-jing-tai-ku/">添加静态库</a>
       </li>
     
@@ -897,10 +971,6 @@ targets中选择工程，搜索header search， &hellip;">
     
       <li class="post">
         <a href="/blog/2014/05/23/xiang-yuan-mo-shi/">享元模式</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/23/isequal-equals-equals-qu-bie/">Isequal == 区别</a>
       </li>
     
   </ul>
