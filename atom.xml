@@ -4,7 +4,7 @@
   <title><![CDATA[Liang's Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-06-09T11:43:45+08:00</updated>
+  <updated>2014-06-10T11:19:51+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[yupliang]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pop Introduce]]></title>
+    <link href="http://yupliang.github.io/blog/2014/06/10/pop-introduce/"/>
+    <updated>2014-06-10T11:01:57+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/06/10/pop-introduce</id>
+    <content type="html"><![CDATA[<p>Pop是一个适用于iOS和OS X平台的可扩展动画引擎,由facebook开源的。</p>
+
+<p>主要分为四个功能。
+1.基本的静态动画
+2.spring动画
+3.decay动画
+4.自定义动画</p>
+
+<p>基本动画</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha]; 
+</span><span class='line'>anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]; ／／过渡动画直接使用系统的参数
+</span><span class='line'>anim.fromValue = @(0.0); 
+</span><span class='line'>anim.toValue = @(1.0); 
+</span><span class='line'>[view pop_addAnimation:anim forKey:@"slide"]; 
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>spring</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds]; 
+</span><span class='line'>anim.toValue = [NSValue valueWithCGRec t:CGRectMake(0, 0, 400, 400)]; 
+</span><span class='line'>[layer pop_addAnimation:anim forKey:@"size"]; </span></code></pre></td></tr></table></div></figure>
+
+
+<p>decay</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>POPDecayAnimation *anim = [POPDecayAnimation animationWithPropertyNamed:kPOPLayerPositionX]; 
+</span><span class='line'>anim.velocity = @(1000.); 
+</span><span class='line'>[layer pop_addAnimation:anim forKey:@"slide"]; </span></code></pre></td></tr></table></div></figure>
+
+
+<p>原文链接<a href="http://www.cocoachina.com/applenews/devnews/2014/0429/8265.html">http://www.cocoachina.com/applenews/devnews/2014/0429/8265.html</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[百度移动统计]]></title>

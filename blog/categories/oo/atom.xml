@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Oo | Liang's Blog]]></title>
+  <link href="http://yupliang.github.io/blog/categories/oo/atom.xml" rel="self"/>
+  <link href="http://yupliang.github.io/"/>
+  <updated>2014-06-10T11:19:51+08:00</updated>
+  <id>http://yupliang.github.io/</id>
+  <author>
+    <name><![CDATA[yupliang]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Pop Introduce]]></title>
+    <link href="http://yupliang.github.io/blog/2014/06/10/pop-introduce/"/>
+    <updated>2014-06-10T11:01:57+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/06/10/pop-introduce</id>
+    <content type="html"><![CDATA[<p>Pop是一个适用于iOS和OS X平台的可扩展动画引擎,由facebook开源的。</p>
+
+<p>主要分为四个功能。
+1.基本的静态动画
+2.spring动画
+3.decay动画
+4.自定义动画</p>
+
+<p>基本动画
+```
+POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]; ／／过渡动画直接使用系统的参数
+anim.fromValue = @(0.0);
+anim.toValue = @(1.0);
+[view pop_addAnimation:anim forKey:@&ldquo;slide&rdquo;];</p>
+
+<p>```</p>
+
+<p>spring</p>
+
+<p><code>
+POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+anim.toValue = [NSValue valueWithCGRec t:CGRectMake(0, 0, 400, 400)];
+[layer pop_addAnimation:anim forKey:@"size"];
+</code></p>
+
+<p>decay</p>
+
+<p><code>
+POPDecayAnimation *anim = [POPDecayAnimation animationWithPropertyNamed:kPOPLayerPositionX];
+anim.velocity = @(1000.);
+[layer pop_addAnimation:anim forKey:@"slide"];
+</code></p>
+
+<p>原文链接<a href="http://www.cocoachina.com/applenews/devnews/2014/0429/8265.html">http://www.cocoachina.com/applenews/devnews/2014/0429/8265.html</a></p>
+]]></content>
+  </entry>
+  
+</feed>
