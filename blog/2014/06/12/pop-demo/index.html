@@ -5,18 +5,17 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>添加静态库 - Liang's Blog</title>
+  <title>Pop Demo - Liang's Blog</title>
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="开发中免不了会添加一些静态库。这里分享一下添加步骤 1
+  <meta name="description" content="利用弹跳动画写一个视图拉伸 1.创建一个视图,并为视图添加拖拽手势 1
 2
 3
 4
 5
 6
-1.加入一個新的Header Search Path。此步骤意在添加静态库的.h文件，比如该文件放在你工程的根目录下的include文件夹下。
-targets中选择工程，搜索header search， &hellip;">
+self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; self.testView. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -25,7 +24,7 @@ targets中选择工程，搜索header search， &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yupliang.github.io/blog/2014/06/06/tian-jia-jing-tai-ku">
+  <link rel="canonical" href="http://yupliang.github.io/blog/2014/06/12/pop-demo">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Liang's Blog" type="application/atom+xml">
@@ -74,7 +73,7 @@ targets中选择工程，搜索header search， &hellip;">
   
   <header>
     
-      <h1 class="entry-title">添加静态库</h1>
+      <h1 class="entry-title">Pop Demo</h1>
     
     
       <p class="meta">
@@ -90,7 +89,7 @@ targets中选择工程，搜索header search， &hellip;">
   
 
 
-<time datetime="2014-06-06T15:32:33+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
+<time datetime="2014-06-12T11:43:02+08:00" pubdate data-updated="true">Jun 12<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://yupliang.github.io">Comments</a>
@@ -100,7 +99,9 @@ targets中选择工程，搜索header search， &hellip;">
   </header>
 
 
-<div class="entry-content"><p>开发中免不了会添加一些静态库。这里分享一下添加步骤</p>
+<div class="entry-content"><p>利用弹跳动画写一个视图拉伸</p>
+
+<p>1.创建一个视图,并为视图添加拖拽手势</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -108,16 +109,47 @@ targets中选择工程，搜索header search， &hellip;">
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>1.加入一個新的Header Search Path。此步骤意在添加静态库的.h文件，比如该文件放在你工程的根目录下的include文件夹下。
-</span><span class='line'>targets中选择工程，搜索header search，然后添加一个新的search path。输入$SOURCE_ROOT/include
+</pre></td><td class='code'><pre><code class=''><span class='line'>self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)];
+</span><span class='line'>    self.testView.backgroundColor = [UIColor redColor];
+</span><span class='line'>    [self.view addSubview:self.testView];
 </span><span class='line'>
-</span><span class='line'>2.在build phases中的Link Binary With Libraries选项下边添加.a依赖。
-</span><span class='line'>
-</span><span class='line'>3.在buldsettings的other link flags 下添加-ObjC标记。這個連結會試著有效率的引入需要的程式碼，有時可以排除static library程式碼。有了這個標誌，所有Objective-C class和library中的類別都可以正確加載。
-</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
+</span><span class='line'>[self.view addGestureRecognizer:panGestureRecognizer];</span></code></pre></td></tr></table></div></figure>
 
 
-<p>原文链接：<a href="http://www.raywenderlich.com/zh-hans/73864/%E5%BB%BA%E7%AB%8B-ios-%E9%9D%9C%E6%85%8B%E5%87%BD%E5%BC%8F%E5%BA%AB">http://www.raywenderlich.com/zh-hans/73864/%E5%BB%BA%E7%AB%8B-ios-%E9%9D%9C%E6%85%8B%E5%87%BD%E5%BC%8F%E5%BA%AB</a></p>
+<p>2.响应手势做动画变换</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>POPSpringAnimation *positionAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPosition];
+</span><span class='line'>    positionAnimation.velocity = [NSValue valueWithCGPoint:velocity];／／速度
+</span><span class='line'>    positionAnimation.dynamicsTension = 5;／／延伸
+</span><span class='line'>    positionAnimation.dynamicsFriction = 15.0f;／／摩擦
+</span><span class='line'>    positionAnimation.springBounciness = 20.0f;／／弹跳
+</span><span class='line'>  [self.testView.layer pop_addAnimation:positionAnimation forKey:@"positionAnimation"];//位置变换
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>      POPSpringAnimation *sizeAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerSize];
+</span><span class='line'>    sizeAnimation.velocity = [NSValue valueWithCGPoint:velocity];
+</span><span class='line'>    sizeAnimation.springBounciness = 1.0f;
+</span><span class='line'>    sizeAnimation.dynamicsFriction = 1.0f;
+</span><span class='line'>    [self.testView.layer pop_addAnimation:sizeAnimation forKey:@"sizeAnimation"]; //大小变换</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以看到两个pop弹跳动画，主要是名字不同kPOPLayerPosition ，kPOPLayerSize。</p>
+
+<p><a href="http://yupliang.github.io">原创作品，转载请注明出处，谢谢。</a></p>
 </div>
 
 
@@ -140,7 +172,7 @@ targets中选择工程，搜索header search， &hellip;">
   
 
 
-<time datetime="2014-06-06T15:32:33+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2014</time>
+<time datetime="2014-06-12T11:43:02+08:00" pubdate data-updated="true">Jun 12<span>th</span>, 2014</time>
       
 
 
@@ -155,10 +187,8 @@ targets中选择工程，搜索header search， &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/" title="Previous Post: 简单的json model映射工具">&laquo; 简单的json model映射工具</a>
+        <a class="basic-alignment left" href="/blog/2014/06/10/pop-introduce/" title="Previous Post: Pop Introduce">&laquo; Pop Introduce</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/06/09/bai-du-yi-dong-tong-ji/" title="Next Post: 百度移动统计">百度移动统计 &raquo;</a>
       
     </p>
   </footer>
@@ -240,8 +270,8 @@ targets中选择工程，搜索header search， &hellip;">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yupliang.github.io/blog/2014/06/06/tian-jia-jing-tai-ku/';
-        var disqus_url = 'http://yupliang.github.io/blog/2014/06/06/tian-jia-jing-tai-ku/';
+        var disqus_identifier = 'http://yupliang.github.io/blog/2014/06/12/pop-demo/';
+        var disqus_url = 'http://yupliang.github.io/blog/2014/06/12/pop-demo/';
         var disqus_script = 'embed.js';
       
     (function () {
