@@ -9,13 +9,17 @@
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="利用弹跳动画写一个视图拉伸 1.创建一个视图,并为视图添加拖拽手势 1
+  <meta name="description" content="铺界面的时候加上这个动画效果，所有的视图会依次呈现 1
 2
 3
 4
 5
 6
-self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; self.testView. &hellip;">
+7
+8
+9
+//todo 这儿是要创建的一些视图，比如10个view //ADD APPEAR ANIMATION
+POPSpringAnimation *anim = [POPSpringAnimation &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +74,116 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/17/popspringanimation-demo/">POPSpringAnimation Demo</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-17T16:45:55+08:00" pubdate data-updated="true">Jun 17<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/06/17/popspringanimation-demo/#disqus_thread"
+             data-disqus-identifier="http://yupliang.github.io/blog/2014/06/17/popspringanimation-demo/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>铺界面的时候加上这个动画效果，所有的视图会依次呈现</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//todo 这儿是要创建的一些视图，比如10个view
+</span><span class='line'>
+</span><span class='line'>//ADD APPEAR ANIMATION
+</span><span class='line'>POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPViewAlpha];
+</span><span class='line'>anim.springBounciness = 8;//弹跳性能，0-20越大弹跳效果越好
+</span><span class='line'>anim.springSpeed = 4;//
+</span><span class='line'>anim.toValue = @(1.0);
+</span><span class='line'>anim.beginTime = CACurrentMediaTime()+0.1*tag;//出现时间
+</span><span class='line'>[view pop_addAnimation:anim forKey:@"appear"];
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>BoundsAnimation,下面的动画是把一个圆形变成了椭圆形</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+</span><span class='line'>CGFloat amount = 80.0;
+</span><span class='line'>if (CGRectGetHeight(view.frame) == CGRectGetWidth(view.frame)) {
+</span><span class='line'>    anim.toValue = [NSValue valueWithCGRect:CGRectInset(view.frame, -amount, 0)];
+</span><span class='line'>    anim.springBounciness = 18;
+</span><span class='line'>} else {
+</span><span class='line'>    anim.toValue = [NSValue valueWithCGRect:CGRectMake(720, 180, 80, 80)];
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>anim.springSpeed = 10;
+</span><span class='line'>[view.layer pop_addAnimation:anim forKey:@"popBounds"];
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>XRotationAnimation
+记录下这个是想为写硬币动画的同学有一些帮助</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerRotationY];
+</span><span class='line'>    anim.duration = 1.0;
+</span><span class='line'>    anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+</span><span class='line'>    view.layer.anchorPoint = CGPointMake(0.5, 0.5);
+</span><span class='line'>    anim.toValue = @(2*M_PI);
+</span><span class='line'>    [view.layer pop_addAnimation:anim forKey:@"popRotationY"];</span></code></pre></td></tr></table></div></figure>
+
+
+<p>PS:</p>
+
+<pre><code>anchorPoint，不得不说这篇文章介绍的太详细啦：http://www.tuicool.com/articles/MvI7fu3
+[原创作品，转载请注明出处，谢谢。](http://yupliang.github.io)
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -861,53 +975,6 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/22/ns-deprecated-ios/">NS_DEPRECATED_IOS</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-22T19:17:20+08:00" pubdate data-updated="true">May 22<span>nd</span>, 2014</time>
-        
-           | <a href="/blog/2014/05/22/ns-deprecated-ios/#disqus_thread"
-             data-disqus-identifier="http://yupliang.github.io/blog/2014/05/22/ns-deprecated-ios/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>每一个新版本iOS出现之后，开发者会发现有一些方法会被NS_DEPRECATED_IOS（xx,xx）.这个宏定义是什么意思呢？</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>前面一个xx表明了这个方法被引入时的iOS版本，后面一个表明它被废弃时的iOS版本。被废弃并不是指这个方法就不存在了，只是意味着我们应当开始考虑将相关代码迁移到新的API上去了。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>所以可以继续使用。</p>
-
-<p>原文链接 <a href="http://codingobjc.com/blog/2014/02/11/ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/">http://codingobjc.com/blog/2014/02/11/ni-xu-yao-zhi-dao-de-suo-you-guan-yu-ioshe-os-xyi-qi-yong-de-apide-shi-er/</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -923,6 +990,10 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/17/popspringanimation-demo/">POPSpringAnimation Demo</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/12/pop-demo/">Pop Demo</a>
       </li>
     
@@ -936,10 +1007,6 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
     
       <li class="post">
         <a href="/blog/2014/06/06/tian-jia-jing-tai-ku/">添加静态库</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/06/jian-dan-de-json-modelying-she-gong-ju/">简单的json Model映射工具</a>
       </li>
     
   </ul>

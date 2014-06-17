@@ -4,7 +4,7 @@
   <title><![CDATA[Liang's Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-06-12T11:54:42+08:00</updated>
+  <updated>2014-06-17T17:14:38+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[yupliang]]></name>
@@ -12,6 +12,86 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[POPSpringAnimation Demo]]></title>
+    <link href="http://yupliang.github.io/blog/2014/06/17/popspringanimation-demo/"/>
+    <updated>2014-06-17T16:45:55+08:00</updated>
+    <id>http://yupliang.github.io/blog/2014/06/17/popspringanimation-demo</id>
+    <content type="html"><![CDATA[<p>铺界面的时候加上这个动画效果，所有的视图会依次呈现</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//todo 这儿是要创建的一些视图，比如10个view
+</span><span class='line'>
+</span><span class='line'>//ADD APPEAR ANIMATION
+</span><span class='line'>POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPViewAlpha];
+</span><span class='line'>anim.springBounciness = 8;//弹跳性能，0-20越大弹跳效果越好
+</span><span class='line'>anim.springSpeed = 4;//
+</span><span class='line'>anim.toValue = @(1.0);
+</span><span class='line'>anim.beginTime = CACurrentMediaTime()+0.1*tag;//出现时间
+</span><span class='line'>[view pop_addAnimation:anim forKey:@"appear"];
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>BoundsAnimation,下面的动画是把一个圆形变成了椭圆形</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+</span><span class='line'>CGFloat amount = 80.0;
+</span><span class='line'>if (CGRectGetHeight(view.frame) == CGRectGetWidth(view.frame)) {
+</span><span class='line'>    anim.toValue = [NSValue valueWithCGRect:CGRectInset(view.frame, -amount, 0)];
+</span><span class='line'>    anim.springBounciness = 18;
+</span><span class='line'>} else {
+</span><span class='line'>    anim.toValue = [NSValue valueWithCGRect:CGRectMake(720, 180, 80, 80)];
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>anim.springSpeed = 10;
+</span><span class='line'>[view.layer pop_addAnimation:anim forKey:@"popBounds"];
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>XRotationAnimation
+记录下这个是想为写硬币动画的同学有一些帮助</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPLayerRotationY];
+</span><span class='line'>    anim.duration = 1.0;
+</span><span class='line'>    anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+</span><span class='line'>    view.layer.anchorPoint = CGPointMake(0.5, 0.5);
+</span><span class='line'>    anim.toValue = @(2*M_PI);
+</span><span class='line'>    [view.layer pop_addAnimation:anim forKey:@"popRotationY"];</span></code></pre></td></tr></table></div></figure>
+
+
+<p>PS:</p>
+
+<pre><code>anchorPoint，不得不说这篇文章介绍的太详细啦：http://www.tuicool.com/articles/MvI7fu3
+[原创作品，转载请注明出处，谢谢。](http://yupliang.github.io)
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pop Demo]]></title>
