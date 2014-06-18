@@ -5,17 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Pop Demo - Liang's Blog</title>
+  <title>Draw Circle - Liang's Blog</title>
   <meta name="author" content="yupliang">
 
   
-  <meta name="description" content="利用弹跳动画写一个视图拉伸 1.创建一个视图,并为视图添加拖拽手势 1
-2
-3
-4
-5
-6
-self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; self.testView. &hellip;">
+  <meta name="description" content="核心影响 1
+PopAnimation CAShapeLayer kPOPShapeLayerStrokeEnd 使用CAShapeLayer与UIBezierPath画出想要的图形(http://blog.csdn.net/volcan1987/article/details/9969455) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,7 +19,7 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yupliang.github.io/blog/2014/06/12/pop-demo">
+  <link rel="canonical" href="http://yupliang.github.io/blog/2014/06/18/draw-circle">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Liang's Blog" type="application/atom+xml">
@@ -73,7 +68,7 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
   
   <header>
     
-      <h1 class="entry-title">Pop Demo</h1>
+      <h1 class="entry-title">Draw Circle</h1>
     
     
       <p class="meta">
@@ -89,7 +84,7 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
   
 
 
-<time datetime="2014-06-12T11:43:02+08:00" pubdate data-updated="true">Jun 12<span>th</span>, 2014</time>
+<time datetime="2014-06-18T11:39:13+08:00" pubdate data-updated="true">Jun 18<span>th</span>, 2014</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://yupliang.github.io">Comments</a>
@@ -99,25 +94,26 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
   </header>
 
 
-<div class="entry-content"><p>利用弹跳动画写一个视图拉伸</p>
+<div class="entry-content"><p>核心影响</p>
 
-<p>1.创建一个视图,并为视图添加拖拽手势</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PopAnimation CAShapeLayer kPOPShapeLayerStrokeEnd
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用CAShapeLayer与UIBezierPath画出想要的图形(<a href="http://blog.csdn.net/volcan1987/article/details/9969455">http://blog.csdn.net/volcan1987/article/details/9969455</a>)</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)];
-</span><span class='line'>    self.testView.backgroundColor = [UIColor redColor];
-</span><span class='line'>    [self.view addSubview:self.testView];
-</span><span class='line'>
-</span><span class='line'>UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
-</span><span class='line'>[self.view addGestureRecognizer:panGestureRecognizer];</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1、新建UIBezierPath对象bezierPath
+</span><span class='line'>2、新建CAShapeLayer对象caShapeLayer
+</span><span class='line'>3、将bezierPath的CGPath赋值给caShapeLayer的path，即caShapeLayer.path = bezierPath.CGPath
+</span><span class='line'>4、把caShapeLayer添加到某个显示该图形的layer中</span></code></pre></td></tr></table></div></figure>
 
 
-<p>2.响应手势做动画变换</p>
+<p>下边代码完成了绘制一个圆圈，使用动画的方式呈现</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -132,22 +128,44 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>POPSpringAnimation *positionAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPosition];
-</span><span class='line'>    positionAnimation.velocity = [NSValue valueWithCGPoint:velocity];／／速度
-</span><span class='line'>    positionAnimation.dynamicsTension = 5;／／延伸
-</span><span class='line'>    positionAnimation.dynamicsFriction = 15.0f;／／摩擦
-</span><span class='line'>    positionAnimation.springBounciness = 20.0f;／／弹跳
-</span><span class='line'>  [self.testView.layer pop_addAnimation:positionAnimation forKey:@"positionAnimation"];//位置变换
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>      POPSpringAnimation *sizeAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerSize];
-</span><span class='line'>    sizeAnimation.velocity = [NSValue valueWithCGPoint:velocity];
-</span><span class='line'>    sizeAnimation.springBounciness = 1.0f;
-</span><span class='line'>    sizeAnimation.dynamicsFriction = 1.0f;
-</span><span class='line'>    [self.testView.layer pop_addAnimation:sizeAnimation forKey:@"sizeAnimation"]; //大小变换</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>    self.circle = [CAShapeLayer layer];
+</span><span class='line'>    self.circle.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(location.x - radius,
+</span><span class='line'>                                                                          location.y - radius,
+</span><span class='line'>                                                                          radius*2,
+</span><span class='line'>                                                                          radius*2)
+</span><span class='line'>                                                  cornerRadius:radius].CGPath;
+</span><span class='line'>    
+</span><span class='line'>    // Configure the apperence of the circle
+</span><span class='line'>    self.circle.fillColor = [UIColor clearColor].CGColor;
+</span><span class='line'>    self.circle.strokeColor = [UIColor whiteColor].CGColor;
+</span><span class='line'>    self.circle.lineWidth = 2;
+</span><span class='line'>    self.circle.strokeEnd = 0.0;
+</span><span class='line'>    
+</span><span class='line'>    // Add to parent layer
+</span><span class='line'>    [self.layer addSublayer:self.circle];
+</span><span class='line'>    
+</span><span class='line'>    POPBasicAnimation *draw = [POPBasicAnimation animationWithPropertyNamed:kPOPShapeLayerStrokeEnd];
+</span><span class='line'>    draw.fromValue = @(0.0);
+</span><span class='line'>    draw.toValue = @(1.0);
+</span><span class='line'>    draw.duration = 0.8;
+</span><span class='line'>    draw.delegate = self;
+</span><span class='line'>    [draw setValue:@"draw" forKey:@"animName"];
+</span><span class='line'>    draw.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+</span><span class='line'>    [self.circle pop_addAnimation:draw forKey:@"draw"];</span></code></pre></td></tr></table></div></figure>
 
 
-<p>可以看到两个pop弹跳动画，主要是名字不同kPOPLayerPosition ，kPOPLayerSize。</p>
+<p>代码来源 <a href="https://github.com/iBaro/PopPlayground">https://github.com/iBaro/PopPlayground</a></p>
 
 <p><a href="http://yupliang.github.io">原创作品，转载请注明出处，谢谢。</a></p>
 </div>
@@ -172,7 +190,7 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
   
 
 
-<time datetime="2014-06-12T11:43:02+08:00" pubdate data-updated="true">Jun 12<span>th</span>, 2014</time>
+<time datetime="2014-06-18T11:39:13+08:00" pubdate data-updated="true">Jun 18<span>th</span>, 2014</time>
       
 
 
@@ -187,10 +205,8 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/06/10/pop-introduce/" title="Previous Post: Pop Introduce">&laquo; Pop Introduce</a>
+        <a class="basic-alignment left" href="/blog/2014/06/17/popspringanimation-demo/" title="Previous Post: POPSpringAnimation Demo">&laquo; POPSpringAnimation Demo</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/06/17/popspringanimation-demo/" title="Next Post: POPSpringAnimation Demo">POPSpringAnimation Demo &raquo;</a>
       
     </p>
   </footer>
@@ -272,8 +288,8 @@ self.testView = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 100, 100)]; sel
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://yupliang.github.io/blog/2014/06/12/pop-demo/';
-        var disqus_url = 'http://yupliang.github.io/blog/2014/06/12/pop-demo/';
+        var disqus_identifier = 'http://yupliang.github.io/blog/2014/06/18/draw-circle/';
+        var disqus_url = 'http://yupliang.github.io/blog/2014/06/18/draw-circle/';
         var disqus_script = 'embed.js';
       
     (function () {
