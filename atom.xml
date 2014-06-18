@@ -4,7 +4,7 @@
   <title><![CDATA[Liang's Blog]]></title>
   <link href="http://yupliang.github.io/atom.xml" rel="self"/>
   <link href="http://yupliang.github.io/"/>
-  <updated>2014-06-18T11:53:46+08:00</updated>
+  <updated>2014-06-18T17:14:50+08:00</updated>
   <id>http://yupliang.github.io/</id>
   <author>
     <name><![CDATA[yupliang]]></name>
@@ -18,7 +18,7 @@
     <link href="http://yupliang.github.io/blog/2014/06/18/draw-circle/"/>
     <updated>2014-06-18T11:39:13+08:00</updated>
     <id>http://yupliang.github.io/blog/2014/06/18/draw-circle</id>
-    <content type="html"><![CDATA[<p>核心影响</p>
+    <content type="html"><![CDATA[<p>核心英雄</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>PopAnimation CAShapeLayer kPOPShapeLayerStrokeEnd
